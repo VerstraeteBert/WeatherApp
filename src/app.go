@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	godotenv.Load("../.env")
+	godotenv.Load()
 
 	r := mux.NewRouter()
 
@@ -19,7 +19,7 @@ func main() {
 
 	apiPort := os.Getenv("API_PORT")
 
-	log.Fatal(http.ListenAndServe(apiPort, r))
+	log.Fatal(http.ListenAndServe(":" + apiPort, r))
 }
 
 func healthCheck (res http.ResponseWriter, req *http.Request) {
