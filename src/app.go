@@ -3,17 +3,23 @@ package main
 import (
 	"encoding/json"
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
+	godotenv.Load("../.env")
+
 	r := mux.NewRouter()
 
 	//heartbeat
 	r.HandleFunc("/", healthCheck).Methods(http.MethodGet)
 
-	log.Fatal(http.ListenAndServe(":1337", r))
+	apiPort := os.Getenv("API_PORT")
+
+	log.Fatal(http.ListenAndServe(apiPort, r))
 }
 
 func healthCheck (res http.ResponseWriter, req *http.Request) {
