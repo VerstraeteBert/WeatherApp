@@ -6,11 +6,7 @@
 .env
 .DS_Store
 .idea/
-
-
-# CMake
-cmake-build-debug/
-cmake-build-release/
+vendor/
 
 
 # Editor-based Rest Client
