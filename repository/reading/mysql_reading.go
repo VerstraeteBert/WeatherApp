@@ -17,12 +17,23 @@ type mysqlReadingRepo struct {
 	Conn *sql.DB
 }
 
-func (m *mysqlReadingRepo) AddReading(ctx context.Context, reading *models.Reading) (*models.Reading, error) {
-	panic("implement me")
+func (m *mysqlReadingRepo) AddReading(ctx context.Context, reading *models.Reading) (int64, error) {
+	pstmt, err := m.Conn.PrepareContext(ctx, "INSERT INTO readings (timestamp, degreescelcius) VALUES (?, ?)")
+	if err != nil {
+		return -1, err
+	}
+	defer pstmt.Close()
+
+	res, err := pstmt.ExecContext(ctx, reading.Timestamp, reading.DegreesCelcius)
+	if err != nil {
+		return -1, err
+	}
+
+	return res.LastInsertId()
 }
 
 func (m *mysqlReadingRepo) ListReadings(ctx context.Context) ([]*models.Reading, error) {
-	rows, err := m.Conn.QueryContext(ctx, "select * from readings")
+	rows, err := m.Conn.QueryContext(ctx, "SELECT * FROM readings")
 	if err != nil {
 		return nil, err
 	}

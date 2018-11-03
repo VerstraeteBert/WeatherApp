@@ -7,5 +7,5 @@ import (
 
 type ReadingRepo interface {
 	ListReadings(ctx context.Context) ([]*models.Reading, error)
-	AddReading(ctx context.Context, reading *models.Reading) (*models.Reading, error)
+	AddReading(ctx context.Context, reading *models.Reading) (int64, error)
 }
