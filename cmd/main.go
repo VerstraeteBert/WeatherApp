@@ -53,3 +53,8 @@ func checkPulse(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(fmt.Sprint("Isn't the weather lovely, fam?")))
 }
 
+type Reading struct {
+	ID int `json:"id"`
+	Timestamp time.Time `json:"timestamp"`
+	DegreesCelcius float32 `json:"degreesCelcius"`
+}
