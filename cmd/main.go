@@ -1,24 +1,46 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"github.com/go-chi/chi"
 	"github.com/joho/godotenv"
+	_ "github.com/go-sql-driver/mysql"
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
 
 var router *chi.Mux
+var db *sql.DB
 
-func main() {
+func init() {
 	godotenv.Load()
-	apiPort := os.Getenv("API_PORT")
 
 	router = chi.NewRouter()
 
+	dbSource := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8",
+		os.Getenv("DB_USER"),
+		os.Getenv("DB_PASS"),
+		os.Getenv("DB_HOST"),
+		os.Getenv("DB_PORT"),
+		os.Getenv("DB_NAME"),
+	)
+
+	var err error
+	db, err = sql.Open("mysql", dbSource)
+	if err != nil {
+		fmt.Printf("Couldn't establish database connection: %s", err)
+		os.Exit(-1)
+	}
+}
+
+func main() {
 	router.Get("/", checkPulse)
 	router.Get("/readings", listReadings)
+
+	apiPort := os.Getenv("API_PORT")
 
 	log.Fatal(http.ListenAndServe(":" + apiPort, router))
 }
