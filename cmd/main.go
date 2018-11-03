@@ -1,6 +1,7 @@
 package main
 
 import (
+	"WeatherApp/models"
 	"database/sql"
 	"encoding/json"
 	"fmt"
@@ -51,9 +52,9 @@ func listReadings(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 	defer rows.Close()
-	payload := make([]*Reading, 0)
+	payload := make([]*models.Reading, 0)
 	for rows.Next() {
-		data := new(Reading)
+		data := new(models.Reading)
 		err := rows.Scan(
 			&data.ID,
 			&data.Timestamp,
@@ -69,12 +70,6 @@ func listReadings(w http.ResponseWriter, r *http.Request) {
 
 func checkPulse(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(fmt.Sprint("Isn't the weather lovely, fam?")))
-}
-
-type Reading struct {
-	ID int `json:"id"`
-	Timestamp string `json:"timestamp"`
-	DegreesCelcius float32 `json:"degreesCelcius"`
 }
 
 func respondwithJSON(w http.ResponseWriter, code int, payload interface{}) {
