@@ -17,6 +17,10 @@ type mysqlReadingRepo struct {
 	Conn *sql.DB
 }
 
+func (m *mysqlReadingRepo) AddReading(ctx context.Context, reading *models.Reading) (*models.Reading, error) {
+	panic("implement me")
+}
+
 func (m *mysqlReadingRepo) ListReadings(ctx context.Context) ([]*models.Reading, error) {
 	rows, err := m.Conn.QueryContext(ctx, "select * from readings")
 	if err != nil {
