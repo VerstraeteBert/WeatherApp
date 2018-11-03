@@ -33,9 +33,9 @@ func main() {
 	rh := readingHandler.NewReadingHandler(connection)
 
 	router.Get("/readings", rh.ListReadings)
+	router.Post("/readings", rh.AddReading)
 
 	fmt.Printf("Server listening on port %s", os.Getenv("API_PORT"))
 	log.Fatal(http.ListenAndServe(":" + os.Getenv("API_PORT"), router))
-
 }
 
