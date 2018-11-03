@@ -32,6 +32,7 @@ func (h *ReadingHandler) ListReadings(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *ReadingHandler) AddReading(w http.ResponseWriter, r *http.Request) {
+	//TODO Validation?
 	reading := models.Reading{}
 
 	json.NewDecoder(r.Body).Decode(&reading)
