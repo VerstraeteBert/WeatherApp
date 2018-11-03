@@ -1,27 +1,33 @@
-package cmd
+package main
 
 import (
-	"encoding/json"
-	"github.com/gorilla/mux"
+	"fmt"
+	"github.com/go-chi/chi"
 	"github.com/joho/godotenv"
 	"log"
 	"net/http"
 	"os"
 )
 
+var router *chi.Mux
+
 func main() {
 	godotenv.Load()
-
-	r := mux.NewRouter()
-
-	//heartbeat
-	r.HandleFunc("/", healthCheck).Methods(http.MethodGet)
-
 	apiPort := os.Getenv("API_PORT")
 
-	log.Fatal(http.ListenAndServe(":" + apiPort, r))
+	router = chi.NewRouter()
+
+	router.Get("/", checkPulse)
+	router.Get("/readings", listReadings)
+
+	log.Fatal(http.ListenAndServe(":" + apiPort, router))
 }
 
-func healthCheck (res http.ResponseWriter, req *http.Request) {
-	json.NewEncoder(res).Encode("Lovely weather init fam?")
+func listReadings(w http.ResponseWriter, r *http.Request) {
+	//TODO implement
 }
+
+func checkPulse(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte(fmt.Sprint("Isn't the weather lovely, fam?")))
+}
+
