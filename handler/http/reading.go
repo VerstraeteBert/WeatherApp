@@ -22,7 +22,7 @@ type ReadingHandler struct {
 }
 
 func (h *ReadingHandler) ListReadings(w http.ResponseWriter, r *http.Request) {
-	payload, err := h.repo.ListReadings(r.Context())
+	payload, err := h.repo.ListReadings()
 	if err != nil {
 		fmt.Print(err)
 		respondWithError(w, http.StatusInternalServerError, "OwO we're working vewwy hawd to fix this sowwy")
@@ -42,7 +42,7 @@ func (h *ReadingHandler) AddReading(w http.ResponseWriter, r *http.Request) {
 		reading.Timestamp = time.Now().Format("2006-01-02 15:04:05")
 	}
 
-	insertedId, err := h.repo.AddReading(r.Context(), &reading)
+	insertedId, err := h.repo.AddReading(&reading)
 	if err != nil {
 		fmt.Print(err)
 		respondWithError(w, http.StatusInternalServerError, "OwO we're working vewwy hawd to fix this sowwy")

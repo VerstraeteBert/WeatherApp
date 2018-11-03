@@ -3,7 +3,6 @@ package reading
 import (
 	"WeatherApp/models"
 	"WeatherApp/repository"
-	"context"
 	"database/sql"
 )
 
@@ -17,14 +16,14 @@ type mysqlReadingRepo struct {
 	Conn *sql.DB
 }
 
-func (m *mysqlReadingRepo) AddReading(ctx context.Context, reading *models.Reading) (int64, error) {
-	pstmt, err := m.Conn.PrepareContext(ctx, "INSERT INTO readings (timestamp, degreescelcius) VALUES (?, ?)")
+func (m *mysqlReadingRepo) AddReading(reading *models.Reading) (int64, error) {
+	pstmt, err := m.Conn.Prepare("INSERT INTO readings (timestamp, degreescelcius) VALUES (?, ?)")
 	if err != nil {
 		return -1, err
 	}
 	defer pstmt.Close()
 
-	res, err := pstmt.ExecContext(ctx, reading.Timestamp, reading.DegreesCelcius)
+	res, err := pstmt.Exec(reading.Timestamp, reading.DegreesCelcius)
 	if err != nil {
 		return -1, err
 	}
@@ -32,8 +31,8 @@ func (m *mysqlReadingRepo) AddReading(ctx context.Context, reading *models.Readi
 	return res.LastInsertId()
 }
 
-func (m *mysqlReadingRepo) ListReadings(ctx context.Context) ([]*models.Reading, error) {
-	rows, err := m.Conn.QueryContext(ctx, "SELECT * FROM readings")
+func (m *mysqlReadingRepo) ListReadings() ([]*models.Reading, error) {
+	rows, err := m.Conn.Query("SELECT * FROM readings")
 	if err != nil {
 		return nil, err
 	}

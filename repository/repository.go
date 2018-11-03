@@ -2,10 +2,9 @@ package repository
 
 import (
 	"WeatherApp/models"
-	"context"
 )
 
 type ReadingRepo interface {
-	ListReadings(ctx context.Context) ([]*models.Reading, error)
-	AddReading(ctx context.Context, reading *models.Reading) (int64, error)
+	ListReadings() ([]*models.Reading, error)
+	AddReading(reading *models.Reading) (int64, error)
 }
