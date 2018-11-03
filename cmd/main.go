@@ -34,7 +34,8 @@ func main() {
 
 	router.Get("/readings", rh.ListReadings)
 
-	log.Fatal(http.ListenAndServe(":" + os.Getenv("API_PORT"), router))
 	fmt.Printf("Server listening on port %s", os.Getenv("API_PORT"))
+	log.Fatal(http.ListenAndServe(":" + os.Getenv("API_PORT"), router))
+
 }
 
