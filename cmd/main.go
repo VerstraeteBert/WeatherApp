@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"github.com/go-chi/chi"
 	_ "github.com/go-sql-driver/mysql"
@@ -9,7 +10,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"time"
 )
 
 var router *chi.Mux
@@ -46,7 +46,25 @@ func main() {
 }
 
 func listReadings(w http.ResponseWriter, r *http.Request) {
-	//TODO implement
+	rows, err := db.Query("select * from readings")
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+	payload := make([]*Reading, 0)
+	for rows.Next() {
+		data := new(Reading)
+		err := rows.Scan(
+			&data.ID,
+			&data.Timestamp,
+			&data.DegreesCelcius,
+		)
+		if err != nil {
+			panic(err)
+		}
+		payload = append(payload, data)
+	}
+	respondwithJSON(w, 200, payload)
 }
 
 func checkPulse(w http.ResponseWriter, r *http.Request) {
@@ -55,6 +73,14 @@ func checkPulse(w http.ResponseWriter, r *http.Request) {
 
 type Reading struct {
 	ID int `json:"id"`
-	Timestamp time.Time `json:"timestamp"`
+	Timestamp string `json:"timestamp"`
 	DegreesCelcius float32 `json:"degreesCelcius"`
+}
+
+func respondwithJSON(w http.ResponseWriter, code int, payload interface{}) {
+    response, _ := json.Marshal(payload)
+    fmt.Println(payload)
+    w.Header().Set("Content-Type", "application/json")
+    w.WriteHeader(code)
+    w.Write(response)
 }
