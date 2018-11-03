@@ -32,14 +32,9 @@ func main() {
 
 	rh := readingHandler.NewReadingHandler(connection)
 
-	router.Get("/", checkPulse)
 	router.Get("/readings", rh.ListReadings)
 
 	log.Fatal(http.ListenAndServe(":" + os.Getenv("API_PORT"), router))
 	fmt.Printf("Server listening on port %s", os.Getenv("API_PORT"))
-}
-
-func checkPulse(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte(fmt.Sprint("Isn't the weather lovely, fam?")))
 }
 
