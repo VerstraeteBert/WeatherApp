@@ -7,7 +7,7 @@ import (
 )
 
 func NewSQLReadingRepo(Conn *sql.DB) repository.ReadingRepo {
-	return &mysqlReadingRepo {
+	return &mysqlReadingRepo{
 		Conn: Conn,
 	}
 }
@@ -55,4 +55,3 @@ func (m *mysqlReadingRepo) ListReadings() ([]*models.Reading, error) {
 
 	return payload, nil
 }
-

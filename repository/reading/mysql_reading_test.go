@@ -15,13 +15,13 @@ import (
 type ReadingRepoSuite struct {
 	suite.Suite
 	readingRepo repository.ReadingRepo
-	db *sql.DB
+	db          *sql.DB
 }
 
 func (s *ReadingRepoSuite) SetupSuite() {
 	godotenv.Load("../../.env") // TODO Figure out how to set path to root
 
-	connection, err := driver.ConnectSQL (
+	connection, err := driver.ConnectSQL(
 		os.Getenv("DB_HOST"),
 		os.Getenv("DB_PORT"),
 		os.Getenv("DB_NAME"),
@@ -62,7 +62,7 @@ func TestStoreSuite(t *testing.T) {
 
 func (s *ReadingRepoSuite) TestAddReading() {
 	s.readingRepo.AddReading(&models.Reading{
-		Timestamp: "2018-11-03 19:51:09",
+		Timestamp:      "2018-11-03 19:51:09",
 		DegreesCelcius: 32.45,
 	})
 
