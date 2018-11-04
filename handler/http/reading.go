@@ -1,12 +1,12 @@
 package http
 
 import (
-	"WeatherApp/driver"
-	"WeatherApp/models"
-	"WeatherApp/repository"
-	readingRepo "WeatherApp/repository/reading"
 	"encoding/json"
 	"fmt"
+	"github.com/VerstraeteBert/WeatherApp/driver"
+	"github.com/VerstraeteBert/WeatherApp/models"
+	"github.com/VerstraeteBert/WeatherApp/repository"
+	readingRepo "github.com/VerstraeteBert/WeatherApp/repository/reading"
 	"net/http"
 	"time"
 )

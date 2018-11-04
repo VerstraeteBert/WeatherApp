@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"WeatherApp/models"
+	"github.com/VerstraeteBert/WeatherApp/models"
 )
 
 type ReadingRepo interface {
