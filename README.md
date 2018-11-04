@@ -1,4 +1,13 @@
-# WeatherApp
+<h1 align="center">WeatherApp</h1>
+
+<p align="center">
+  <a href="https://goreportcard.com/report/github.com/VerstraeteBert/WeatherApp">
+  	<img src="https://goreportcard.com/badge/github.com/VerstraeteBert/WeatherApp" alt="">
+  </a>
+  <a href="https://circleci.com/gh/VerstraeteBert/WeatherApp/tree/master">
+  	<img src="https://circleci.com/gh/VerstraeteBert/WeatherApp/tree/master.svg?style=svg" alt="">
+  </a>
+</p>    
 
 ### Prerequisites
 - Go 1.10.1+
@@ -27,6 +36,7 @@ Readings:
 - [X] Set up CI
 - [ ] Add endpoint to change reading interval
 - [ ] Allow MQTT communication (from proxy arduino)
+- [ ] Expand current endpoints for more weather data
 - [ ] Build Web FrontEnd (React, vue?)
 - [ ] Build Web FrontEnd (React, vue?)
 - [ ] Dockerize 
