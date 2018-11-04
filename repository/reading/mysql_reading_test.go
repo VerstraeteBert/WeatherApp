@@ -1,10 +1,10 @@
 package reading
 
 import (
-	"WeatherApp/driver"
-	"WeatherApp/models"
-	"WeatherApp/repository"
 	"database/sql"
+	"github.com/VerstraeteBert/WeatherApp/driver"
+	"github.com/VerstraeteBert/WeatherApp/models"
+	"github.com/VerstraeteBert/WeatherApp/repository"
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
