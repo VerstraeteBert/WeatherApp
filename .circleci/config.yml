@@ -16,7 +16,6 @@ jobs:
         name: run build
         command: |
           dep ensure
-          go build ./...
     - run:
         name: Ensure Correctly Linted Go Packages
         command: "! go fmt ./... 2>&1 | read"
