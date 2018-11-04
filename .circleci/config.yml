@@ -3,13 +3,13 @@ jobs:
   build:
     docker:
     - image: circleci/golang:1.11.1
-        environment:
-          DB_NAME: "circle_test"
-          DB_USER: "root"
-          DB_PASS: ""
-          DB_HOST: "localhost"
-          DB_PORT: "3306"
     - image: circleci/mysql:5.7
+      environment:
+        DB_NAME: "circle_test"
+        DB_USER: "root"
+        DB_PASS: ""
+        DB_HOST: "localhost"
+        DB_PORT: "3306"
 
     working_directory: /go/src/github.com/VerstraeteBert/WeatherApp
     steps:
