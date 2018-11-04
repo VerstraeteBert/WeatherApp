@@ -1,5 +1,3 @@
-CREATE DATABASE IF NOT EXISTS `weatherdb`;
-
 CREATE TABLE IF NOT EXISTS `readings` (
 	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
 	`timestamp` datetime NOT NULL,

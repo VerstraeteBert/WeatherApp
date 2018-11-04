@@ -12,13 +12,9 @@ type DB struct {
 
 var dbConn = &DB{}
 
-func ConnectSQL(host, port, dbname, uname, pass string) (*DB, error) {
-	dbSource := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8",
-		uname,
-		pass,
-		host,
-		port,
-		dbname,
+func ConnectSQL(databaseUrl string) (*DB, error) {
+	dbSource := fmt.Sprintf("%s?charset=utf8",
+		databaseUrl,
 	)
 
 	d, err := sql.Open("mysql", dbSource)
