@@ -12,17 +12,16 @@ import (
 	"os"
 )
 
-
 func main() {
 	godotenv.Load()
 
-	connection, err := driver.ConnectSQL (
+	connection, err := driver.ConnectSQL(
 		os.Getenv("DB_HOST"),
 		os.Getenv("DB_PORT"),
 		os.Getenv("DB_NAME"),
 		os.Getenv("DB_USER"),
 		os.Getenv("DB_PASS"),
-		)
+	)
 	if err != nil {
 		fmt.Printf("Couldn't connect to database: %v", err)
 		os.Exit(-1)
@@ -33,8 +32,8 @@ func main() {
 	rh := readingHandler.NewReadingHandler(connection)
 
 	router.Get("/readings", rh.ListReadings)
+	router.Post("/readings", rh.AddReading)
 
-	log.Fatal(http.ListenAndServe(":" + os.Getenv("API_PORT"), router))
 	fmt.Printf("Server listening on port %s", os.Getenv("API_PORT"))
+	log.Fatal(http.ListenAndServe(":"+os.Getenv("API_PORT"), router))
 }
-
