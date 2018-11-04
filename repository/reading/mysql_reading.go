@@ -1,9 +1,9 @@
 package reading
 
 import (
-	"WeatherApp/models"
-	"WeatherApp/repository"
 	"database/sql"
+	"github.com/VerstraeteBert/WeatherApp/models"
+	"github.com/VerstraeteBert/WeatherApp/repository"
 )
 
 func NewSQLReadingRepo(Conn *sql.DB) repository.ReadingRepo {

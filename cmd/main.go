@@ -1,9 +1,9 @@
 package main
 
 import (
-	"WeatherApp/driver"
-	readingHandler "WeatherApp/handler/http"
 	"fmt"
+	"github.com/VerstraeteBert/WeatherApp/driver"
+	readingHandler "github.com/VerstraeteBert/WeatherApp/handler/http"
 	"github.com/go-chi/chi"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
