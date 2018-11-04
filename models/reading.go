@@ -5,3 +5,7 @@ type Reading struct {
 	Timestamp      string  `json:"timestamp"`
 	DegreesCelcius float32 `json:"degreesCelcius"`
 }
+
+
+
+
