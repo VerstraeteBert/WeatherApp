@@ -39,4 +39,4 @@ jobs:
         name: Run go tests
         command: go test ./...
         environment:
-          DATABASE_URL: root:@localhost:3306/circle_test
+          DATABASE_URL: root:@tcp(localhost:3306)/circle_test
