@@ -23,11 +23,7 @@ func (s *ReadingRepoSuite) SetupSuite() {
 	godotenv.Load("../../.env") // TODO Figure out how to set path to root
 
 	connection, err := driver.ConnectSQL(
-		os.Getenv("DB_HOST"),
-		os.Getenv("DB_PORT"),
-		os.Getenv("DB_NAME"),
-		os.Getenv("DB_USER"),
-		os.Getenv("DB_PASS"),
+		os.Getenv("DATABASE_URL"),
 	)
 
 	fmt.Println(os.Getenv("DB_HOST"))

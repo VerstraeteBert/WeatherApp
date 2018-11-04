@@ -16,11 +16,7 @@ func main() {
 	godotenv.Load()
 
 	connection, err := driver.ConnectSQL(
-		os.Getenv("DB_HOST"),
-		os.Getenv("DB_PORT"),
-		os.Getenv("DB_NAME"),
-		os.Getenv("DB_USER"),
-		os.Getenv("DB_PASS"),
+		os.Getenv("DATABASE_URL"),
 	)
 	if err != nil {
 		fmt.Printf("Couldn't connect to database: %v", err)
