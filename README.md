@@ -42,7 +42,7 @@ Readings:
 - [ ] Add endpoint to change reading interval
 - [ ] Allow MQTT communication (from proxy arduino)
 - [ ] Expand current endpoints for more weather data
-- [ ] Build Web FrontEnd (React, vue?)
+- [ ] Authenticate devices and their users (JWT)
 - [ ] Build Web FrontEnd (React, vue?)
 - [ ] Dockerize 
 - [ ] Host 
