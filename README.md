@@ -30,6 +30,7 @@ Readings:
 - [ ] Build Web FrontEnd (React, vue?)
 - [ ] Build Web FrontEnd (React, vue?)
 - [ ] Dockerize 
+- [ ] Host 
 - [ ] Expand CI/CD
 - [ ] More / better designed tests
 
