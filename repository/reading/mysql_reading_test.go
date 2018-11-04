@@ -2,6 +2,7 @@ package reading
 
 import (
 	"database/sql"
+	"fmt"
 	"github.com/VerstraeteBert/WeatherApp/driver"
 	"github.com/VerstraeteBert/WeatherApp/models"
 	"github.com/VerstraeteBert/WeatherApp/repository"
@@ -28,6 +29,9 @@ func (s *ReadingRepoSuite) SetupSuite() {
 		os.Getenv("DB_USER"),
 		os.Getenv("DB_PASS"),
 	)
+
+	fmt.Println(os.Getenv("DB_HOST"))
+	fmt.Println("zdzfzfzfzefzf")
 
 	if err != nil {
 		s.T().Fatal(err)
