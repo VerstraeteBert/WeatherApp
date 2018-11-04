@@ -1,0 +1,15 @@
+version: 2
+jobs:
+  build:
+    docker:
+    - image: circleci/golang:1.11.1
+
+    working_directory: /go/src/github.com/VerstraeteBert/WeatherApp
+    steps:
+    - checkout
+    - run: go get -u github.com/golang/dep/cmd/dep
+    - run:
+        name: run build
+        command: |
+          dep ensure
+          go build ./...
