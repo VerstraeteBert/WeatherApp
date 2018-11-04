@@ -2,7 +2,6 @@ package reading
 
 import (
 	"database/sql"
-	"fmt"
 	"github.com/VerstraeteBert/WeatherApp/driver"
 	"github.com/VerstraeteBert/WeatherApp/models"
 	"github.com/VerstraeteBert/WeatherApp/repository"
@@ -22,12 +21,8 @@ type ReadingRepoSuite struct {
 func (s *ReadingRepoSuite) SetupSuite() {
 	godotenv.Load("../../.env") // TODO Figure out how to set path to root
 
-	connectionUrl := os.Getenv("DATABASE_URL")
-
-	fmt.Println(connectionUrl)
-
 	connection, err := driver.ConnectSQL(
-		connectionUrl,
+		os.Getenv("DATABASE_URL"),
 	)
 
 	if err != nil {
