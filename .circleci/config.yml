@@ -13,3 +13,9 @@ jobs:
         command: |
           dep ensure
           go build ./...
+    - run:
+      name: Ensure correctly vetted code
+      command: go vet ./...
+    - run:
+        name: Ensure correctly linted (go fmt)
+        command: go fmt ./...
