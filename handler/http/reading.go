@@ -24,7 +24,7 @@ type ReadingHandler struct {
 func (h *ReadingHandler) ListReadings(w http.ResponseWriter, r *http.Request) {
 	payload, err := h.repo.ListReadings()
 	if err != nil {
-		respondWithError(w, http.StatusInternalServerError, "OwO we're working vewwy hawd to fix this sowwy")
+		respondWithError(w, http.StatusInternalServerError, "Couldn't create request")
 		return
 	}
 
@@ -62,7 +62,7 @@ func (h *ReadingHandler) AddReading(w http.ResponseWriter, r *http.Request) {
 
 	insertedId, err := h.repo.AddReading(&reading)
 	if err != nil {
-		respondWithError(w, http.StatusInternalServerError, "OwO we're working vewwy hawd to fix this sowwy")
+		respondWithError(w, http.StatusInternalServerError, "Something went wrong")
 		return
 	}
 
