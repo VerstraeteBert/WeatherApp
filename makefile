@@ -16,3 +16,6 @@ deps:
 
 test:
 	go test ./...
+
+clean:
+	rm ./main
