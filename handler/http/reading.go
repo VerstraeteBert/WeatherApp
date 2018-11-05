@@ -2,11 +2,11 @@ package http
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/VerstraeteBert/WeatherApp/driver"
 	"github.com/VerstraeteBert/WeatherApp/models"
 	"github.com/VerstraeteBert/WeatherApp/repository"
 	readingRepo "github.com/VerstraeteBert/WeatherApp/repository/reading"
+	"log"
 	"net/http"
 	"time"
 )
@@ -24,8 +24,9 @@ type ReadingHandler struct {
 func (h *ReadingHandler) ListReadings(w http.ResponseWriter, r *http.Request) {
 	payload, err := h.repo.ListReadings()
 	if err != nil {
-		fmt.Print(err)
+		log.Print(err)
 		respondWithError(w, http.StatusInternalServerError, "OwO we're working vewwy hawd to fix this sowwy")
+		return
 	}
 
 	respondWithJSON(w, http.StatusOK, payload)
@@ -44,8 +45,9 @@ func (h *ReadingHandler) AddReading(w http.ResponseWriter, r *http.Request) {
 
 	insertedId, err := h.repo.AddReading(&reading)
 	if err != nil {
-		fmt.Print(err)
+		log.Print(err)
 		respondWithError(w, http.StatusInternalServerError, "OwO we're working vewwy hawd to fix this sowwy")
+		return
 	}
 
 	respondWithJSON(w, http.StatusCreated, map[string]int64{"id": insertedId})
@@ -53,7 +55,6 @@ func (h *ReadingHandler) AddReading(w http.ResponseWriter, r *http.Request) {
 
 func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	response, _ := json.Marshal(payload)
-	fmt.Println(payload)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
 	w.Write(response)
