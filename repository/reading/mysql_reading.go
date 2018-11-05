@@ -17,13 +17,13 @@ type mysqlReadingRepo struct {
 }
 
 func (m *mysqlReadingRepo) AddReading(reading *models.Reading) (int64, error) {
-	pstmt, err := m.Conn.Prepare("INSERT INTO readings (timestamp, degreescelcius) VALUES (?, ?)")
+	pstmt, err := m.Conn.Prepare("INSERT INTO readings (timestamp, degreescelsius) VALUES (?, ?)")
 	if err != nil {
 		return -1, err
 	}
 	defer pstmt.Close()
 
-	res, err := pstmt.Exec(reading.Timestamp, reading.DegreesCelcius)
+	res, err := pstmt.Exec(reading.Timestamp, reading.DegreesCelsius)
 	if err != nil {
 		return -1, err
 	}
@@ -45,7 +45,7 @@ func (m *mysqlReadingRepo) ListReadings() ([]*models.Reading, error) {
 		err := rows.Scan(
 			&data.ID,
 			&data.Timestamp,
-			&data.DegreesCelcius,
+			&data.DegreesCelsius,
 		)
 		if err != nil {
 			panic(err)

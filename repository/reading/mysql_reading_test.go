@@ -59,10 +59,10 @@ func TestStoreSuite(t *testing.T) {
 func (s *ReadingRepoSuite) TestAddReading() {
 	s.readingRepo.AddReading(&models.Reading{
 		Timestamp:      "2018-11-03 19:51:09",
-		DegreesCelcius: 32.45,
+		DegreesCelsius: 32.45,
 	})
 
-	res, err := s.db.Query(`SELECT COUNT(*) FROM readings WHERE timestamp="2018-11-03 19:51:09" AND degreescelcius=32.45`)
+	res, err := s.db.Query(`SELECT COUNT(*) FROM readings WHERE timestamp="2018-11-03 19:51:09" AND degreescelsius=32.45`)
 	if err != nil {
 		s.T().Fatal(err)
 	}
@@ -79,7 +79,7 @@ func (s *ReadingRepoSuite) TestAddReading() {
 }
 
 func (s *ReadingRepoSuite) TestListReading() {
-	_, err := s.db.Query(`INSERT INTO readings (timestamp, degreescelcius) VALUES ("2018-11-03 19:51:09", 32.45)`)
+	_, err := s.db.Query(`INSERT INTO readings (timestamp, degreescelsius) VALUES ("2018-11-03 19:51:09", 32.45)`)
 	if err != nil {
 		s.T().Fatal(err)
 	}
@@ -91,9 +91,9 @@ func (s *ReadingRepoSuite) TestListReading() {
 
 	assert.Equal(s.T(), 1, len(res))
 	assert.Equal(s.T(), "2018-11-03 19:51:09", res[0].Timestamp)
-	assert.Equal(s.T(), float32(32.45), res[0].DegreesCelcius)
+	assert.Equal(s.T(), float32(32.45), res[0].DegreesCelsius)
 
-	_, err = s.db.Query(`INSERT INTO readings (timestamp, degreescelcius) VALUES ("2019-11-03 19:51:09", 33.45)`)
+	_, err = s.db.Query(`INSERT INTO readings (timestamp, degreescelsius) VALUES ("2019-11-03 19:51:09", 33.45)`)
 	if err != nil {
 		s.T().Fatal(err)
 	}

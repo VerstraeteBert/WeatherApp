@@ -34,7 +34,7 @@ func (h *ReadingHandler) ListReadings(w http.ResponseWriter, r *http.Request) {
 func (h *ReadingHandler) AddReading(w http.ResponseWriter, r *http.Request) {
 	// Using anonymous struct for validation
 	type readingValidator struct {
-		DegreesCelcius float32 `json:"degreesCelcius"`
+		DegreesCelsius float32 `json:"degreesCelsius"`
 	}
 
 	rv := new(readingValidator)
@@ -49,15 +49,15 @@ func (h *ReadingHandler) AddReading(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Arbitrary bounds for temperature
-	if rv.DegreesCelcius > 150 || rv.DegreesCelcius < -50 {
-		respondWithError(w, http.StatusBadRequest, "DegreesCelcius needs to be between -50 and 150 inclusive")
+	if rv.DegreesCelsius > 150 || rv.DegreesCelsius < -50 {
+		respondWithError(w, http.StatusBadRequest, "DegreesCelsius needs to be between -50 and 150 inclusive")
 		return
 	}
 
 	reading := models.Reading{
 		// Adds proper timestamp for MySQL (RFC 3339 without timezones)
 		Timestamp:      time.Now().Format("2006-01-02 15:04:05"),
-		DegreesCelcius: rv.DegreesCelcius,
+		DegreesCelsius: rv.DegreesCelsius,
 	}
 
 	insertedId, err := h.repo.AddReading(&reading)

@@ -20,21 +20,21 @@ func TestReadingHandler_ListReadings(t *testing.T) {
 		status           int
 		err              bool
 	}{
-		{"errorous request", nil, nil, http.StatusInternalServerError, true},
+		{"erroneous request", nil, nil, http.StatusInternalServerError, true},
 		{
-			"succesful request",
+			"successful request",
 			[]*models.Reading{
 				{
 					ID:             1,
 					Timestamp:      "1997-06-02 06:10:12",
-					DegreesCelcius: 24.00,
+					DegreesCelsius: 24.00,
 				},
 			},
 			[]models.Reading{
 				{
 					ID:             1,
 					Timestamp:      "1997-06-02 06:10:12",
-					DegreesCelcius: 24.00,
+					DegreesCelsius: 24.00,
 				},
 			},
 			http.StatusOK,
