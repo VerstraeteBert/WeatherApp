@@ -24,7 +24,6 @@ type ReadingHandler struct {
 func (h *ReadingHandler) ListReadings(w http.ResponseWriter, r *http.Request) {
 	payload, err := h.repo.ListReadings()
 	if err != nil {
-		log.Print(err)
 		respondWithError(w, http.StatusInternalServerError, "OwO we're working vewwy hawd to fix this sowwy")
 		return
 	}
@@ -33,19 +32,36 @@ func (h *ReadingHandler) ListReadings(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *ReadingHandler) AddReading(w http.ResponseWriter, r *http.Request) {
-	//TODO Validation?
-	reading := models.Reading{}
+	// Using anonymous struct for validation
+	type readingValidator struct {
+		DegreesCelcius float32 `json:"degreesCelcius"`
+	}
 
-	json.NewDecoder(r.Body).Decode(&reading)
+	rv := new(readingValidator)
 
-	if reading.Timestamp == "" {
-		// Adds proper timestamp for MySQL (RFC 3339)
-		reading.Timestamp = time.Now().Format("2006-01-02 15:04:05")
+	d := json.NewDecoder(r.Body)
+	d.DisallowUnknownFields()
+
+	err := d.Decode(&rv)
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid Request")
+		return
+	}
+
+	// Arbitrary bounds for temperature
+	if rv.DegreesCelcius > 150 || rv.DegreesCelcius < -50 {
+		respondWithError(w, http.StatusBadRequest, "DegreesCelcius needs to be between -50 and 150 inclusive")
+		return
+	}
+
+	reading := models.Reading{
+		// Adds proper timestamp for MySQL (RFC 3339 without timezones)
+		Timestamp:      time.Now().Format("2006-01-02 15:04:05"),
+		DegreesCelcius: rv.DegreesCelcius,
 	}
 
 	insertedId, err := h.repo.AddReading(&reading)
 	if err != nil {
-		log.Print(err)
 		respondWithError(w, http.StatusInternalServerError, "OwO we're working vewwy hawd to fix this sowwy")
 		return
 	}
@@ -61,5 +77,6 @@ func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 }
 
 func respondWithError(w http.ResponseWriter, code int, msg string) {
+	log.Print(msg)
 	respondWithJSON(w, code, map[string]string{"message": msg})
 }
