@@ -23,9 +23,9 @@ which then get persisted and can be consulted through a web interface.
 ### Setup
 Checkout   
 Run dep ensure in project root   
-Manually run migrations (in ./migrations folder)
-Copy .env.example to .env and enter your MySql config    
-Build and run main.go (in ./cmd folder)       
+Copy .env.example to .env and enter your MySql config / desired port   
+Make sure you have a database with name "weatherdb" and then run make migrate
+Run make build to start the server
 
 ### Endpoints
 Readings:
