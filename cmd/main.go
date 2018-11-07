@@ -27,6 +27,8 @@ func main() {
 
 	rh := readingHandler.NewReadingHandler(connection)
 
+	xd := 2
+	log.Println(xd)
 	router.Get("/readings", rh.ListReadings)
 	router.Post("/readings", rh.AddReading)
 
