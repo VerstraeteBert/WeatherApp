@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/VerstraeteBert/WeatherApp/driver"
 	readingHandler "github.com/VerstraeteBert/WeatherApp/handler/http"
 	"github.com/go-chi/chi"
@@ -9,24 +8,36 @@ import (
 	"github.com/joho/godotenv"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
 )
 
 func main() {
 	godotenv.Load()
 
+	// Connect to MySQL DB
 	connection, err := driver.ConnectSQL(
 		os.Getenv("DATABASE_URL"),
 	)
 	if err != nil {
-		fmt.Printf("Couldn't connect to database: %v", err)
-		os.Exit(-1)
+		log.Fatalf("Couldn't connect to database: %v", err)
 	}
 
-	router := chi.NewRouter()
+	uri, err := url.Parse(os.Getenv("MQTT_SERVER"))
+	if err != nil {
+		log.Fatalf("Couldn't fetch CloudMQTT URL from env: %v", err)
+	}
+
+	// Setting up MQTT Client
+	mqttClient, err := driver.ConnectMQTT(
+		os.Getenv("MQTT_CLIENT_ID"),
+		uri,
+	)
 
 	rh := readingHandler.NewReadingHandler(connection)
 
+	// HTTP Routes
+	router := chi.NewRouter()
 	router.Get("/readings", rh.ListReadings)
 	router.Post("/readings", rh.AddReading)
 
