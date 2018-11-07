@@ -39,8 +39,11 @@ func main() {
 	// HTTP Routes
 	router := chi.NewRouter()
 	router.Get("/readings", rh.ListReadings)
-	router.Post("/readings", rh.AddReading)
 
-	fmt.Printf("Server listening on port %s", os.Getenv("API_PORT"))
+	// MQTT Routes
+	mqttClient.Subscribe("weatherapp/reading", 2, rh.AddReading)
+
+	// Run server
+	log.Printf("Server listening on port %s", os.Getenv("API_PORT"))
 	log.Fatal(http.ListenAndServe(":"+os.Getenv("API_PORT"), router))
 }
