@@ -10,6 +10,7 @@ jobs:
     - checkout
     - run: go get github.com/golang/dep/cmd/dep
     - run: go get github.com/golang-migrate/migrate/cli
+    - run: go get github.com/go-sql-driver/mysql
 
       #  CircleCi's Go Docker image includes netcat
       #  This allows polling the DB port to confirm it is open before proceedingd
@@ -28,13 +29,10 @@ jobs:
         name: run build
         command: |
           dep ensure
-          go build ./...
+          make build
     - run:
         name: Ensure correctly vetted code
-        command: go vet ./...
-    - run:
-        name: Ensure correctly linted (go fmt)
-        command: go fmt ./...
+        command: make lint-fix
     - run:
         name: Run go tests
         command: |

@@ -1,5 +1,5 @@
 migrate:
-	migrate -database "mysql://test:test@tcp(127.0.0.1:8889)/weatherdb" -path ./migrations up
+	migrate -database "${DATABASE_URL}" -path ./migrations up
 
 start: build
 		./main
@@ -12,7 +12,7 @@ lint-fix:
 	go fmt ./...
 
 deps:
-	go get
+	dep ensure
 
 test:
 	go test ./...
