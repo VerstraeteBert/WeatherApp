@@ -1,6 +1,7 @@
 package http
 
 import (
+	"bytes"
 	"encoding/json"
 	"github.com/VerstraeteBert/WeatherApp/driver"
 	"github.com/VerstraeteBert/WeatherApp/models"
@@ -42,13 +43,14 @@ func (h *ReadingHandler) AddReading(client mqtt.Client, message mqtt.Message) {
 	}
 
 	rmv := new(readingMessageValidator)
-	err := json.Unmarshal(message.Payload(), rmv)
+
+	d := json.NewDecoder(bytes.NewReader(message.Payload()))
+	d.DisallowUnknownFields()
+	err := d.Decode(&rmv)
 	if err != nil {
 		log.Printf("Failed to unmarshal reading message: %v", err)
 		return
 	}
-
-	log.Print(rmv.Reading.DegreesCelsius)
 
 	// Arbitrary bounds for temperature
 	if rmv.Reading.DegreesCelsius > 150 || rmv.Reading.DegreesCelsius < -50 {
