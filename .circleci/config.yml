@@ -8,9 +8,8 @@ jobs:
     working_directory: /go/src/github.com/VerstraeteBert/WeatherApp
     steps:
     - checkout
-    - run: go get -u github.com/golang/dep/cmd/dep
+    - run: go get github.com/golang/dep/cmd/dep
     - run: go get github.com/golang-migrate/migrate/cli
-    - run: go get -u github.com/go-sql-driver/mysql
 
       #  CircleCi's Go Docker image includes netcat
       #  This allows polling the DB port to confirm it is open before proceedingd
@@ -40,7 +39,7 @@ jobs:
         name: Run go tests
         command: |
           go build -tags 'mysql' -o ./migrate /go/src/github.com/golang-migrate/migrate/cli
-          ./migrate -database "mysql://root:@tcp(localhost:3306)/circle_test" -path ./migrations up
+          ./migrate -database "${DATABASE_URL}" -path ./migrations up
           go test ./...
         environment:
           DATABASE_URL: root:@tcp(localhost:3306)/circle_test
