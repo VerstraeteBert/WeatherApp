@@ -10,6 +10,17 @@
   version = "v1.1.1"
 
 [[projects]]
+  digest = "1:184008c955d6a3226b700c13ed0e875a7a051a759618f9bccba9b5c99f17faa5"
+  name = "github.com/eclipse/paho.mqtt.golang"
+  packages = [
+    ".",
+    "packets",
+  ]
+  pruneopts = "UT"
+  revision = "36d01c2b4cbeb3d2a12063e4880ce30800af9560"
+  version = "v1.1.1"
+
+[[projects]]
   digest = "1:b9914f85d95a0968bafd1be1908ba29e2eafafd88d6fd13696be42bf5368c380"
   name = "github.com/go-chi/chi"
   packages = ["."]
@@ -63,6 +74,18 @@
   version = "v1.2.2"
 
 [[projects]]
+  branch = "master"
+  digest = "1:50095e42352dba1c6ab2cec7e03b24fb4b513123f41d4ab4dbd2627c25fe18b8"
+  name = "golang.org/x/net"
+  packages = [
+    "internal/socks",
+    "proxy",
+    "websocket",
+  ]
+  pruneopts = "UT"
+  revision = "a544f70c90f196e50d198126db0c4cb2b562fec0"
+
+[[projects]]
   digest = "1:c25289f43ac4a68d88b02245742347c94f1e108c534dda442188015ff80669b3"
   name = "google.golang.org/appengine"
   packages = ["cloudsql"]
@@ -74,6 +97,7 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
+    "github.com/eclipse/paho.mqtt.golang",
     "github.com/go-chi/chi",
     "github.com/go-sql-driver/mysql",
     "github.com/joho/godotenv",

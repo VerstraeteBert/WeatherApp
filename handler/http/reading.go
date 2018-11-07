@@ -1,11 +1,13 @@
 package http
 
 import (
+	"bytes"
 	"encoding/json"
 	"github.com/VerstraeteBert/WeatherApp/driver"
 	"github.com/VerstraeteBert/WeatherApp/models"
 	"github.com/VerstraeteBert/WeatherApp/repository"
 	readingRepo "github.com/VerstraeteBert/WeatherApp/repository/reading"
+	"github.com/eclipse/paho.mqtt.golang"
 	"log"
 	"net/http"
 	"time"
@@ -31,42 +33,42 @@ func (h *ReadingHandler) ListReadings(w http.ResponseWriter, r *http.Request) {
 	respondWithJSON(w, http.StatusOK, payload)
 }
 
-func (h *ReadingHandler) AddReading(w http.ResponseWriter, r *http.Request) {
+func (h *ReadingHandler) AddReading(client mqtt.Client, message mqtt.Message) {
 	// Using anonymous struct for validation
-	type readingValidator struct {
-		DegreesCelsius float32 `json:"degreesCelsius"`
+	type readingMessageValidator struct {
+		ClientId string `json:"clientId"`
+		Reading  struct {
+			DegreesCelsius float32 `json:"degreesCelsius"`
+		} `json:"reading"`
 	}
 
-	rv := new(readingValidator)
+	rmv := new(readingMessageValidator)
 
-	d := json.NewDecoder(r.Body)
+	d := json.NewDecoder(bytes.NewReader(message.Payload()))
 	d.DisallowUnknownFields()
-
-	err := d.Decode(&rv)
+	err := d.Decode(&rmv)
 	if err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid Request")
+		log.Printf("Failed to unmarshal reading message: %v", err)
 		return
 	}
 
 	// Arbitrary bounds for temperature
-	if rv.DegreesCelsius > 150 || rv.DegreesCelsius < -50 {
-		respondWithError(w, http.StatusBadRequest, "DegreesCelsius needs to be between -50 and 150 inclusive")
+	if rmv.Reading.DegreesCelsius > 150 || rmv.Reading.DegreesCelsius < -50 {
+		log.Print("Degrees Celcius should be between -50 and 150 inclusive")
 		return
 	}
 
 	reading := models.Reading{
 		// Adds proper timestamp for MySQL (RFC 3339 without timezones)
 		Timestamp:      time.Now().Format("2006-01-02 15:04:05"),
-		DegreesCelsius: rv.DegreesCelsius,
+		DegreesCelsius: rmv.Reading.DegreesCelsius,
 	}
 
-	insertedId, err := h.repo.AddReading(&reading)
+	_, err = h.repo.AddReading(&reading)
 	if err != nil {
-		respondWithError(w, http.StatusInternalServerError, "Something went wrong")
+		log.Printf("Failed to save reading to database: %v", err)
 		return
 	}
-
-	respondWithJSON(w, http.StatusCreated, map[string]int64{"id": insertedId})
 }
 
 func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
