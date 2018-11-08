@@ -2,6 +2,7 @@ package reading
 
 import (
 	"database/sql"
+
 	"github.com/VerstraeteBert/WeatherApp/models"
 	"github.com/VerstraeteBert/WeatherApp/repository"
 )

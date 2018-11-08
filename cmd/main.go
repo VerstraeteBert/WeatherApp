@@ -1,15 +1,16 @@
 package main
 
 import (
+	"log"
+	"net/http"
+	"net/url"
+	"os"
+
 	"github.com/VerstraeteBert/WeatherApp/driver"
 	readingHandler "github.com/VerstraeteBert/WeatherApp/handler/http"
 	"github.com/go-chi/chi"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
-	"log"
-	"net/http"
-	"net/url"
-	"os"
 )
 
 func main() {

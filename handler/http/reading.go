@@ -3,14 +3,15 @@ package http
 import (
 	"bytes"
 	"encoding/json"
+	"log"
+	"net/http"
+	"time"
+
 	"github.com/VerstraeteBert/WeatherApp/driver"
 	"github.com/VerstraeteBert/WeatherApp/models"
 	"github.com/VerstraeteBert/WeatherApp/repository"
 	readingRepo "github.com/VerstraeteBert/WeatherApp/repository/reading"
 	"github.com/eclipse/paho.mqtt.golang"
-	"log"
-	"net/http"
-	"time"
 )
 
 func NewReadingHandler(db *driver.DB) *ReadingHandler {

@@ -3,13 +3,14 @@ package http
 import (
 	"encoding/json"
 	"errors"
-	"github.com/VerstraeteBert/WeatherApp/models"
-	"github.com/VerstraeteBert/WeatherApp/repository/mocks"
-	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/VerstraeteBert/WeatherApp/models"
+	"github.com/VerstraeteBert/WeatherApp/repository/mocks"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestReadingHandler_ListReadings(t *testing.T) {

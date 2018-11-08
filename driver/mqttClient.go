@@ -3,9 +3,10 @@ package driver
 import (
 	"errors"
 	"fmt"
-	"github.com/eclipse/paho.mqtt.golang"
 	"net/url"
 	"time"
+
+	"github.com/eclipse/paho.mqtt.golang"
 )
 
 func ConnectMQTT(clientId string, uri *url.URL) (mqtt.Client, error) {
