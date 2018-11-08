@@ -13,7 +13,10 @@ import (
 )
 
 func main() {
-	godotenv.Load()
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("Couldn't load environment variables: %v", err)
+	}
 
 	// Connect to MySQL DB
 	connection, err := driver.ConnectSQL(
@@ -33,6 +36,9 @@ func main() {
 		os.Getenv("MQTT_CLIENT_ID"),
 		uri,
 	)
+	if err != nil {
+		log.Fatalf("Couldn't connect to MQTT Broker: %v", err)
+	}
 
 	rh := readingHandler.NewReadingHandler(connection)
 
