@@ -49,7 +49,7 @@ func (m *mysqlReadingRepo) ListReadings() ([]*models.Reading, error) {
 			&data.DegreesCelsius,
 		)
 		if err != nil {
-			panic(err)
+			return nil, err
 		}
 		payload = append(payload, data)
 	}
