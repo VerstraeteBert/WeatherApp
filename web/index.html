@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>WeatherApp</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="app">
+
+        <header>
+            <h1>
+                IoT WeatherApp
+            </h1>
+
+            <p>Welcome to our WeatherApp.</p>
+            <p>Get interesting info about the weather in real-time or see our history.</p>
+        </header>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temperature</th>
+                <th>Humidity</th>
+                <th>Lumen</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="reading in readings">
+                <td>{{ reading.date.toString() }}</td>
+                <td>{{ reading.temperature }}</td>
+                <td>{{ reading.humidity }}</td>
+                <td>{{ reading.lumen }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a href="#" @click.prevent="getAllReadings()">Get all readings!</a>
+        <a href="#" @click.prevent="doReading()">Get new reading!</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
