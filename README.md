@@ -40,7 +40,7 @@ Readings:
 # To do
 - [X] Set up CI
 - [ ] Add endpoint to change reading interval
-- [ ] Allow MQTT communication (from proxy arduino)
+- [X] Allow MQTT communication (from proxy arduino)
 - [ ] Expand current endpoints for more weather data
 - [ ] Authenticate devices and their users (JWT)
 - [ ] Build Web FrontEnd (React, vue?)
