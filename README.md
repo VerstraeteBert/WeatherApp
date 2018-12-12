@@ -14,6 +14,8 @@
 Creating a weather app that receives weather data from IoT devices via the MQTT protocol,    
 which then get persisted and can be consulted through a web interface.
 
+## 
+
 ### Prerequisites
 - Go 1.10.1+
 - Mysql 5.7+
